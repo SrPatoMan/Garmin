@@ -1,2 +1,2 @@
-# GoASIR
+# Garmin
 Automatizacion de tareas ASIR
