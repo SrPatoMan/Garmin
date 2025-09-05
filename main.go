@@ -17,10 +17,12 @@ func main() {
 	a.Settings().SetTheme(theme.LightTheme())
 	dark := false
 
+	textoColor := color.RGBA{R: 35, G: 38, B: 52, A: 255}
+
 	w := a.NewWindow("ASIR GARMIN")
 	w.Resize(fyne.NewSize(800, 600))
 
-	btn1 := widget.NewButton("Setup", nil)
+	btn1 := widget.NewButton("Setup", func() { go Startup(a) })
 
 	banner := canvas.NewText("ASIR", color.Black)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
@@ -41,7 +43,7 @@ func main() {
 	topGap := canvas.NewRectangle(color.Transparent)
 	topGap.SetMinSize(fyne.NewSize(0, 15))
 
-	garminText := canvas.NewText("Okay Garmin...", color.Black)
+	garminText := canvas.NewText("Okay Garmin...", textoColor)
 	garminText.TextSize = 35
 	garminText.TextStyle = fyne.TextStyle{Bold: true, Italic: true}
 
