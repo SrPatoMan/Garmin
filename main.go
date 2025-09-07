@@ -23,6 +23,12 @@ func main() {
 	w.Resize(fyne.NewSize(800, 600))
 
 	btn1 := widget.NewButton("Setup", func() { go Startup(a) })
+	btn2 := widget.NewButton("OS Info", func() {
+		osWin := a.NewWindow("OS Info")
+		osWin.Resize(fyne.NewSize(600, 400))
+		osWin.SetFixedSize(true)
+		OsInfo(osWin)
+	})
 
 	banner := canvas.NewText("ASIR", color.Black)
 	banner.TextStyle = fyne.TextStyle{Bold: true}
@@ -70,7 +76,7 @@ func main() {
 		}
 	}
 
-	box1 := container.NewVBox(banner, bannerMargen, btn1, btnTheme)
+	box1 := container.NewVBox(banner, bannerMargen, btn1, btn2, btnTheme)
 	box2 := container.NewVBox(garminText, garminImg)
 	content := container.NewHBox(sideGap, box1, sideGap, lineaDeMargen, sideGap, box2, sideGap)
 	root := container.NewVBox(topGap, content)
