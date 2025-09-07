@@ -34,7 +34,7 @@ func OsInfo(osWin fyne.Window) {
 
 	ip, ipErr := exec.Command("powershell", "-Command", "Get-NetIPAddress -AddressFamily IPv4 | Select -ExpandProperty IPAddress").Output()
 
-	ipLabel := widget.NewLabel("Direcciones IP")
+	ipLabel := widget.NewLabel("DIRECCIONES IP")
 	var ipInfo *canvas.Text
 	if ipErr != nil {
 		ipInfo = canvas.NewText("Error al mostrar IP", color.Black)
@@ -44,25 +44,39 @@ func OsInfo(osWin fyne.Window) {
 		ipInfo = canvas.NewText(actualIPs, color.Black)
 	}
 
+	gwBytes, gwErr := exec.Command("powershell", "-NoProfile", "-NonInteractive", "-Command", `[Console]::OutputEncoding=[Text.Encoding]::UTF8;Get-NetIPConfiguration | Where-Object { $_.IPv4DefaultGateway } | Select-Object -ExpandProperty IPv4DefaultGateway | Select-Object -ExpandProperty NextHop |ConvertTo-Json -Compress
+`).Output()
+
+	gwLabel := widget.NewLabel("PUERTAS DE ENLACE")
+	var gwInfo *canvas.Text
+	if gwErr != nil {
+		gwInfo = canvas.NewText("Error al mostrar puertas de enlace", color.Black)
+	} else {
+		actualGW := strings.TrimSpace(string(gwBytes))
+		actualGW = strings.ReplaceAll(actualGW, "\r\n", " | ")
+		gwInfo = canvas.NewText(actualGW, color.Black)
+	}
+
 	envs := os.Environ()
 	sort.Strings(envs)
 	rt := widget.NewRichTextWithText(strings.Join(envs, "\n"))
 	rt.Wrapping = fyne.TextWrapWord
 
-	envsLabel := widget.NewLabel("Variables de entorno")
+	envsLabel := widget.NewLabel("VARIABLES DE ENTORNO")
 	envsInfo := container.NewScroll(rt)
 	envsInfo.SetMinSize(fyne.NewSize(600, 300))
 
 	gap := canvas.NewText("", color.Transparent)
 	gap.TextSize = 10
 
-	hostnameLabel := widget.NewLabel("Hostname")
+	hostnameLabel := widget.NewLabel("HOSTNAME")
 	hostnameInfo := canvas.NewText(hostname, color.Black)
 
 	box1 := container.NewVBox(hostnameLabel, hostnameInfo)
 	box2 := container.NewVBox(ipLabel, ipInfo)
-	box3 := container.NewVBox(envsLabel, envsInfo)
-	content := container.NewVBox(box1, gap, box2, gap, box3)
+	box3 := container.NewVBox(gwLabel, gwInfo)
+	box4 := container.NewVBox(envsLabel, envsInfo)
+	content := container.NewVBox(box1, gap, box2, gap, box3, gap, box4)
 
 	osWin.SetContent(content)
 	osWin.Show()

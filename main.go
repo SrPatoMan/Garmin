@@ -27,7 +27,7 @@ func main() {
 		osWin := a.NewWindow("OS Info")
 		osWin.Resize(fyne.NewSize(600, 400))
 		osWin.SetFixedSize(true)
-		OsInfo(osWin)
+		go OsInfo(osWin)
 	})
 
 	banner := canvas.NewText("ASIR", color.Black)
