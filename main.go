@@ -37,7 +37,7 @@ func main() {
 
 	bannerMargen := widget.NewLabel("")
 
-	garminImg := canvas.NewImageFromFile("G:\\repos\\Garmin\\assets\\garmin.jpg")
+	garminImg := canvas.NewImageFromFile("D:\\Garmin\\assets\\garmin.jpg")
 	garminImg.SetMinSize(fyne.NewSize(800, 600))
 	garminImg.FillMode = canvas.ImageFillContain
 
@@ -54,7 +54,7 @@ func main() {
 	garminText.TextStyle = fyne.TextStyle{Bold: true, Italic: true}
 
 	btnTheme := widget.NewButton("", nil)
-	darkmodeIcon, darkmodeErr := fyne.LoadResourceFromPath("G:\\repos\\Garmin\\assets\\darkmode.png")
+	darkmodeIcon, darkmodeErr := fyne.LoadResourceFromPath("D:\\Garmin\\assets\\darkmode.png")
 	if darkmodeErr != nil {
 		btnTheme.SetText("Oscuro/Claro")
 	}

@@ -47,7 +47,7 @@ func OsInfo(osWin fyne.Window) {
 	gwBytes, gwErr := exec.Command("powershell", "-NoProfile", "-NonInteractive", "-Command", `[Console]::OutputEncoding=[Text.Encoding]::UTF8;Get-NetIPConfiguration | Where-Object { $_.IPv4DefaultGateway } | Select-Object -ExpandProperty IPv4DefaultGateway | Select-Object -ExpandProperty NextHop |ConvertTo-Json -Compress
 `).Output()
 
-	gwLabel := widget.NewLabel("PUERTAS DE ENLACE")
+	gwLabel := widget.NewLabel("PUERTA DE ENLACE")
 	var gwInfo *canvas.Text
 	if gwErr != nil {
 		gwInfo = canvas.NewText("Error al mostrar puertas de enlace", color.Black)
