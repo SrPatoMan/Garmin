@@ -34,7 +34,7 @@ func OsInfo(osWin fyne.Window) {
 
 	ip, ipErr := exec.Command("powershell", "-Command", "Get-NetIPAddress -AddressFamily IPv4 | Select -ExpandProperty IPAddress").Output()
 
-	ipLabel := widget.NewLabel("DIRECCIONES IP")
+	ipLabel := widget.NewLabel("DIRECCION IP")
 	var ipInfo *canvas.Text
 	if ipErr != nil {
 		ipInfo = canvas.NewText("Error al mostrar IP", color.Black)
